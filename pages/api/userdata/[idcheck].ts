@@ -4,16 +4,17 @@ import client from "../../../libs/server/client";
 
 type Data = {
   ok: Boolean;
-  newUser?: userInfo;
-  user_id?: String;
-  ck?: Object | null;
+  // newUser?: userInfo;
+  // user_id?: String;
+  // ck?: Object | null;
   err?: String;
-  PW?: String;
-  email?: String;
-  userName?: String;
-  hp?: String | any;
-  userYmd?: String;
-  purpose?: String;
+  // PW?: String;
+  // email?: String;
+  // userName?: String;
+  // hp?: String | any;
+  // userYmd?: String;
+  // purpose?: String;
+  userinfo?: userInfo;
 };
 
 export default async function Handler(
@@ -28,32 +29,29 @@ export default async function Handler(
             user_id: req.query.idcheck?.toString(),
           },
         });
-        res.status(200).json({ ok: true, ck: IDCheck });
+        res.status(200).json({ ok: true });
         return;
 
       case "POST":
         console.log(JSON.parse(req.body));
-        const { ID, PW, email, userName, hp, userYmd, purpose } = JSON.parse(
-          req.body
-        );
+        const { user_id, ps, email, name, hp, ymd, purpose }: userInfo =
+          JSON.parse(req.body);
         console.log(req.body);
         const newUser = await client.userInfo.create({
           data: {
-            user_id: ID,
-            ps: PW,
+            user_id,
+            ps,
             email,
-            hp: hp?.toString(),
-            name: userName,
-            ymd: userYmd,
+            name,
+            hp,
+            ymd,
             purpose,
           },
         });
-        res.status(200).json({ ok: true, ck: newUser });
+        res.status(200).json({ ok: true });
         return;
     }
   } catch (err) {
-    res
-      .status(200)
-      .json({ ok: false, err: `${err}`, user_id: req.query.toString() });
+    res.status(200).json({ ok: false, err: `${err}` });
   }
 }
