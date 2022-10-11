@@ -5,15 +5,15 @@ import { json } from "stream/consumers";
 
 export default function SingUp() {
   const [email, setEmail] = useState("");
-  const [userName, setUserName] = useState("");
-  const [HP, setHP] = useState("");
-  const [userYMD, setUserYMD] = useState("");
+  const [name, setUserName] = useState("");
+  const [hp, setHP] = useState("");
+  const [ymd, setUserYMD] = useState("");
   const [purpose, setpurpose] = useState("");
   let [IDerr, setIDerr] = useState("");
-  let [ID, setID] = useState("");
+  let [user_id, setID] = useState("");
   const [idc, setIdc] = useState(true);
   const [idcmsg, setIdcmsg] = useState("");
-  let [PW, serPW] = useState("");
+  let [ps, serPW] = useState("");
   let [PWCK, setPWCK] = useState("");
   let [PwMsg, setPwMsg] = useState(true);
   let [ckPoint, setCkPoint] = useState({
@@ -27,7 +27,7 @@ export default function SingUp() {
   });
 
   function IDCheck(event: React.MouseEvent<HTMLButtonElement>) {
-    fetch(`/api/userdata/${ID}`, {
+    fetch(`/api/userdata/${user_id}`, {
       method: "GET",
     })
       .then((res) => res.json())
@@ -47,16 +47,16 @@ export default function SingUp() {
       ckPoint.purpose_B === true
     ) {
       const data = {
-        ID,
-        PW,
+        user_id,
+        ps,
         email,
-        userName,
-        HP,
-        userYMD,
+        name,
+        hp,
+        ymd,
         purpose,
       };
       console.log(data);
-      fetch(`/api/userdata/${ID}`, {
+      fetch(`/api/userdata/${user_id}`, {
         method: "POST",
         body: JSON.stringify(data),
       })
@@ -71,10 +71,10 @@ export default function SingUp() {
   }
   const pwinCK = function (event: React.ChangeEvent<HTMLInputElement>) {
     setPWCK(event.target.value.toString());
-    if (PW !== PWCK) {
+    if (ps !== PWCK) {
       setPwMsg(false);
     }
-    if (PW === PWCK) {
+    if (ps === PWCK) {
       setPwMsg(true);
     }
   };
