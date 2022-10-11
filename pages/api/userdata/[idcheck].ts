@@ -11,12 +11,12 @@ type Data = {
   PW?: String;
   email?: String;
   userName?: String;
-  HP?: String;
-  userYMD?: String;
+  hp?: String;
+  userYmd?: String;
   purpose?: String;
 };
 
-export default async function handler(
+export default async function Handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
@@ -33,7 +33,7 @@ export default async function handler(
 
       case "POST":
         console.log(JSON.parse(req.body));
-        const { ID, PW, email, userName, HP, userYMD, purpose } = JSON.parse(
+        const { ID, PW, email, userName, hp, userYmd, purpose } = JSON.parse(
           req.body
         );
         console.log(req.body);
@@ -42,9 +42,9 @@ export default async function handler(
             user_id: ID,
             ps: PW,
             email,
-            HP,
+            hp: hp,
             name: userName,
-            YMD: userYMD,
+            ymd: userYmd,
             purpose,
           },
         });

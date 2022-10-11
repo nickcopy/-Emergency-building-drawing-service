@@ -16,8 +16,8 @@ model userInfo {
   ps       String
   email    String
   name     String
-  HP       String
-  YMD      String
+  hp       String
+  ymd      String
   purpose  String
   createAt DateTime @default(now())
   updataAt DateTime @updatedAt
