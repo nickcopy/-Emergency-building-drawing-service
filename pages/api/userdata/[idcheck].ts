@@ -1,11 +1,19 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { userInfo } from "@prisma/client";
 import client from "../../../libs/server/client";
 
 type Data = {
   ok: Boolean;
+  newUser?: userInfo;
   user_id?: String;
   ck?: Object | null;
   err?: String;
+  PW?: String;
+  email?: String;
+  userName?: String;
+  HP?: String;
+  userYMD?: String;
+  purpose?: String;
 };
 
 export default async function handler(
@@ -13,14 +21,36 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   try {
-    const IDCheck = await client.userInfo.findUnique({
-      where: {
-        user_id: req.query.idcheck?.toString(),
-      },
-    });
+    switch (req.method) {
+      case "GET":
+        const IDCheck = await client.userInfo.findUnique({
+          where: {
+            user_id: req.query.idcheck?.toString(),
+          },
+        });
+        res.status(200).json({ ok: true, ck: IDCheck });
+        return;
 
-    res.status(200).json({ ok: true, ck: IDCheck });
-    console.log(req.query.idcheck);
+      case "POST":
+        console.log(JSON.parse(req.body));
+        const { ID, PW, email, userName, HP, userYMD, purpose } = JSON.parse(
+          req.body
+        );
+        console.log(req.body);
+        const newUser = await client.userInfo.create({
+          data: {
+            user_id: ID,
+            ps: PW,
+            email,
+            HP,
+            name: userName,
+            YMD: userYMD,
+            purpose,
+          },
+        });
+        res.status(200).json({ ok: true, ck: newUser });
+        return;
+    }
   } catch (err) {
     res
       .status(200)
