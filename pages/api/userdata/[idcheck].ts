@@ -11,7 +11,7 @@ type Data = {
   PW?: String;
   email?: String;
   userName?: String;
-  hp?: String;
+  hp?: String | any;
   userYmd?: String;
   purpose?: String;
 };
