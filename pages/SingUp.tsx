@@ -35,7 +35,6 @@ export default function SingUp() {
         setIdc(json.ck);
         console.log(json.ck);
       });
-    console.log(idc);
   }
   function userDataBtn() {
     if (
