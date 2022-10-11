@@ -42,7 +42,7 @@ export default async function Handler(
             user_id: ID,
             ps: PW,
             email,
-            hp,
+            hp: hp?.toString(),
             name: userName,
             ymd: userYmd,
             purpose,
