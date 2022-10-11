@@ -43,7 +43,7 @@ export default async function Handler(
             ps,
             email,
             name,
-            hp,
+            hp: hp || " ",
             ymd,
             purpose,
           },
