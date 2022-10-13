@@ -27,7 +27,7 @@ export default async function Handler(
         console.log(JSON.parse(req.body));
         const { user_id, ps, email, name, hp, ymd, purpose }: userInfo =
           JSON.parse(req.body);
-        console.log(req.body);
+
         const newUser = await client.userInfo.create({
           data: {
             user_id,

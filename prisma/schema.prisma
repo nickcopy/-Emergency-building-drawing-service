@@ -16,7 +16,7 @@ model userInfo {
   ps       String
   email    String
   name     String
-  hp       String?
+  hp       String
   ymd      String
   purpose  String
   createAt DateTime @default(now())
