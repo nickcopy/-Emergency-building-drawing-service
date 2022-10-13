@@ -33,7 +33,7 @@ export default function handler(
   try {
     console.log(req.body, "빌더 서버");
     console.log(s1, s2);
-
+    
     setTimeout(() => {
       fetch(
         `http://apis.data.go.kr/1613000/BldRgstService_v2/getBrRecapTitleInfo?ServiceKey=${process.env.Building_information_API_KEY}&sigunguCd=${s1}&bjdongCd=${s2}&bun=0012&ji=0000`,

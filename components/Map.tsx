@@ -115,7 +115,7 @@ export default function Map() {
       })
         .then((res) => res.json())
         .then((json) => setBuData(json.newPlatPlc));
-    }, 4000);
+    }, 3000);
   }
 
   useEffect(() => {
