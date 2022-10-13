@@ -1,25 +1,34 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { useEffect } from "react";
+import { parseString } from "xml2js";
+import { useEffect, useState } from "react";
 
 type Data = {
-  name: string;
+  name?: string;
   result?: any;
 };
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
   try {
+    console.log(req.body, "넘어온 데이터");
+
+    //${process.env.hjd}
     fetch(
-      //sig_cd,full_nm,sig_kor_nm
-      `http://api.vworld.kr/req/data?key=${process.env.WORLD_OPEM_API}&service=data&version=2.0&request=getfeature&format=json&size=10&page=1&data=LT_C_ADSIGG_INFO&attrFilter=sig_kor_nm:like:안양`
+      `http://apis.data.go.kr/1741000/StanReginCd/getStanReginCdList?ServiceKey=${process.env.hjd}&type=xml&pageNo=1&numOfRows=3&flag=Y&locatadd_nm=${req.body}`
     )
-      .then((res) => res.json())
-      .then((json) => {
-        console.log(json);
-        res.status(200).json({ name: "dd", result: json });
+      .then((res) => res.text())
+      .then((xmlStr) => {
+        parseString(xmlStr, { explicitArray: false }, (err, obj) => {
+          setTimeout(() => {
+            res.status(200).json({
+              name: "법정동 서버 완료",
+              result: obj.StanReginCd.row,
+            });
+          }, 2000);
+        });
       });
   } catch (err) {
     res.status(504).json({ name: `${err}` });

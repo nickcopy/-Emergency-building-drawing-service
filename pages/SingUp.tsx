@@ -1,7 +1,5 @@
 import { userAgentFromString } from "next/server";
 import { useDebugValue, useEffect, useState } from "react";
-import { consumers } from "stream";
-import { json } from "stream/consumers";
 
 export default function SingUp() {
   const [email, setEmail] = useState("");

@@ -1,6 +1,6 @@
 export default function Login() {
   return (
-    <div className="flex h-full flex-col justify-center items-center bg-fuchsia-200">
+    <div className="flex h-[550px]  w-[1120px] flex-col justify-center items-center bg-fuchsia-200">
       <div className="flex bg-red-200">
         <div className="flex flex-col m-4">
           <input className="m-1"></input>

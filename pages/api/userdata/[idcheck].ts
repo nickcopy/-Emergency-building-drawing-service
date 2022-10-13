@@ -4,16 +4,7 @@ import client from "../../../libs/server/client";
 
 type Data = {
   ok: Boolean;
-  // newUser?: userInfo;
-  // user_id?: String;
-  // ck?: Object | null;
   err?: String;
-  // PW?: String;
-  // email?: String;
-  // userName?: String;
-  // hp?: String | any;
-  // userYmd?: String;
-  // purpose?: String;
   userinfo?: userInfo;
 };
 
@@ -43,7 +34,7 @@ export default async function Handler(
             ps,
             email,
             name,
-            hp: hp || " ",
+            hp,
             ymd,
             purpose,
           },

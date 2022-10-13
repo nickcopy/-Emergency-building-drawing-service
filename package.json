@@ -12,12 +12,16 @@
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@prisma/client": "^4.4.0",
+    "@types/xml2js": "^0.4.11",
     "next": "12.3.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-xml-parser": "^1.1.8",
+    "xml2js": "^0.4.23",
+    "xml2js-parser": "^1.1.1"
   },
   "devDependencies": {
-    "@types/node": "18.8.2",
+    "@types/node": "^18.8.4",
     "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",
     "@types/styled-components": "^5.1.26",
