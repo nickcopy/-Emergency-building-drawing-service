@@ -36,7 +36,7 @@ export default function handler(
   s2 = ff(s2);
 
   try {
-    console.log(req.body, "빌더 서버");
+    console.log(req.body, "빌리 서버");
     console.log(s1, s2);
 
     setTimeout(() => {
