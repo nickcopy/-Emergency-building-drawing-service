@@ -19,6 +19,10 @@ export default function Layout(props: LayoutProps) {
       href: "/SingUp",
       title: "SignUp",
     },
+    {
+      href: "/drawingupdata",
+      title: "drawing_Updata",
+    },
   ];
   return (
     <div className="min-h-screen flex flex-col">

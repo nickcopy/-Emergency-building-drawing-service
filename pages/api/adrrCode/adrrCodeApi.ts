@@ -22,12 +22,10 @@ export default async function handler(
       .then((res) => res.text())
       .then((xmlStr) => {
         parseString(xmlStr, { explicitArray: false }, (err, obj) => {
-          setTimeout(() => {
-            res.status(200).json({
-              name: "법정동 서버 완료",
-              result: obj.StanReginCd.row,
-            });
-          }, 2000);
+          res.status(200).json({
+            name: "법정동 서버 완료",
+            result: obj.StanReginCd.row,
+          });
         });
       });
   } catch (err) {

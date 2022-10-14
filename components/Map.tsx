@@ -2,93 +2,37 @@ import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 
 interface Row {
-  region_cd: string;
-  sido_cd: string;
-  sgg_cd: string;
-  umd_cd: string;
-  ri_cd: string;
   locatjumin_cd: string;
   locatjijuk_cd: string;
-  locatadd_nm: string;
-  locat_order: string;
-  locat_rm: string;
-  locathigh_cd: string;
-  locallow_nm: string;
-  adpt_de: string;
 }
-interface dlxjvpdltm {
+
+interface DataSet {
   archArea: number;
-  atchBldArea: number;
   atchBldCnt: number;
   bcRat: number;
-  bjdongCd: number;
   bldNm: string;
-  block: string;
-  bun: string;
-  bylotCnt: number;
-  crtnDay: number;
-  engrEpi: number;
-  engrGrade: string;
-  engrRat: number;
-  etcPurps: string;
   fmlyCnt: number;
-  gnBldCert: number;
-  gnBldGrade: string;
+  grndFlrCnt: number;
+  heit: number;
   hhldCnt: number;
-  hoCnt: number;
-  indrAutoArea: number;
-  indrAutoUtcnt: number;
-  indrMechArea: number;
-  indrMechUtcnt: number;
-  itgBldCert: number;
-  itgBldGrade: string;
-  ji: string;
-  lot: string;
-  mainBldCnt: number;
-  mainPurpsCd: string;
-  mainPurpsCdNm: string;
-  mgmBldrgstPk: string;
-  naBjdongCd: number;
-  naMainBun: number;
-  naRoadCd: number;
-  naSubBun: number;
-  naUgrndCd: number;
-  newOldRegstrGbCd: number;
-  newOldRegstrGbCdNm: string;
-  newPlatPlc: string;
-  oudrAutoArea: number;
-  oudrAutoUtcnt: number;
-  oudrMechArea: number;
-  oudrMechUtcnt: number;
+  etcPurps: string;
   platArea: number;
-  platGbCd: number;
-  platPlc: string;
-  pmsDay: string;
-  pmsnoGbCd: string;
-  pmsnoGbCdNm: string;
-  pmsnoKikCd: string;
-  pmsnoKikCdNm: string;
-  pmsnoYear: string;
-  regstrGbCd: number;
-  regstrGbCdNm: string;
-  regstrKindCd: number;
-  regstrKindCdNm: string;
-  rnum: number;
-  sigunguCd: number;
-  splotNm: string;
-  stcnsDay: string;
+  rserthqkDsgnApplyYn: number;
   totArea: number;
-  totPkngCnt: number;
-  useAprDay: string;
+  ugrndFlrCnt: number;
+  useAprDay: number;
   vlRat: number;
-  vlRatEstmTotArea: number;
 }
+
 export default function Map() {
+  let [dataidx, setDataidx] = useState(0);
   const [adrrInputData, setAdrrInputData] = useState(""); //inputData
   const [inAdrrdata, setinAdrrdata] = useState(""); //카카오에 들어가는 변수
   const [adrrNuber, setAdrrNuber] = useState(""); //시군구 numver 코드 들어오는 변수
   const [sggu, setSggu] = useState<Row>(); //시군구 코드 변수
-  const [buData, setBuData] = useState<dlxjvpdltm>();
+  const [ben, setBen] = useState("");
+  const [gi, setGi] = useState("");
+  const [buData, setBuData] = useState<DataSet[]>([]);
   function adrrInpiutChangF(event: React.ChangeEvent<HTMLInputElement>) {
     setAdrrInputData(event.target.value);
   }
@@ -106,18 +50,25 @@ export default function Map() {
       .then((json) => {
         // console.log(json, "법정동 코드 서버응답");
         setSggu(json.result);
-      });
+        console.log(sggu?.locatjijuk_cd);
 
-    setTimeout(() => {
-      fetch(`/api/adrrCode/buildingInformation`, {
-        method: "POST",
-        body: sggu?.locatjijuk_cd,
+        return json.result;
       })
-        .then((res) => res.json())
-        .then((json) => setBuData(json.newPlatPlc));
-    }, 3000);
+      .then((result) => {
+        fetch(`/api/adrrCode/buildingInformation`, {
+          method: "POST",
+          body: result.locatjijuk_cd,
+        })
+          .then((res) => res.json())
+          .then((json) => {
+            console.log(json.result, "gg");
+            setBuData(json.result);
+            return json;
+          })
+          .then((json) => console.log(json.result, "ww"));
+      });
   }
-
+  console.log(buData, "end");
   useEffect(() => {
     const mapScript = document.createElement("script");
 
@@ -187,8 +138,8 @@ export default function Map() {
   return (
     <div className=" flex  ">
       <MapContainer id="map" />
-      <div className="bg-white border-r-2 flex flex-col w-[40vh]">
-        <div className="text-black">검색:</div>
+      <div className="bg-white border-r-2 flex flex-col w-[42vh]">
+        <div className="text-black">검색ex : 서울특별시 강남구 개포동</div>
         <div className="flex">
           <div className="mr-2">시군구 : </div>
           <input
@@ -198,6 +149,27 @@ export default function Map() {
           ></input>
           <hr></hr>
         </div>
+        <div className="flex flex-col">
+          <div className="mr-2">번 : </div>
+          <input
+            value={ben}
+            onChange={(envent) => {
+              setBen(envent.target.value);
+            }}
+            className="rounded-full  border-gray-500 border-b-2 mb-2"
+          ></input>
+          <div className="mr-2">지 : </div>
+          <input
+            value={gi}
+            onChange={(envent) => {
+              setGi(envent.target.value);
+            }}
+            className="rounded-full  border-gray-500 border-b-2 mb-2"
+          ></input>
+
+          <hr></hr>
+        </div>
+        <div>번,지 ex:0012 (4자리 고정)</div>
         <button
           onClick={selectDataF}
           className="hover:bg-fuchsia-600 rounded-xl hover:text-white bg-violet-400"
@@ -210,12 +182,45 @@ export default function Map() {
         >
           제원 검색
         </button>
-        <div></div>
       </div>
-      <div className="flex flex-col items-center bg-red-200 w-[265px]">
+      <div className="flex flex-col items-center bg-red-200 w-[250px]">
         <div>제원 필드</div>
-        <div>{<div>{sggu?.locatjijuk_cd}</div>}</div>
-        <div>{<div className="bf-red-200">{buData?.regstrKindCdNm}</div>}</div>
+        <select
+          onChange={(event) => {
+            setDataidx(Number(event.target.value));
+            console.log(buData);
+          }}
+        >
+          <option hidden>선택하세요</option>
+          {buData.map((ele, idx) => {
+            return (
+              <option key={idx} value={idx}>
+                {ele.bldNm}
+              </option>
+            );
+          })}
+        </select>
+        <div>
+          <div>특수지명 : {dataidx ? buData[dataidx].bldNm : ""}</div>
+          <div>대지면적(㎡):{dataidx ? buData[dataidx].platArea : ""}</div>{" "}
+          <div> 건축면적(㎡):{dataidx ? buData[dataidx].archArea : ""}</div>{" "}
+          <div> 건폐율(%):{dataidx ? buData[dataidx].bcRat : ""}</div>{" "}
+          <div> 연면적(㎡):{dataidx ? buData[dataidx].totArea : ""}</div>{" "}
+          <div> 용적률(%):{dataidx ? buData[dataidx].vlRat : ""}</div>{" "}
+          <div> 기타용도:{dataidx ? buData[dataidx].etcPurps : ""}</div>{" "}
+          <div> 세대수(세대):{dataidx ? buData[dataidx].hhldCnt : ""}</div>{" "}
+          <div> 가구수(가구):{dataidx ? buData[dataidx].fmlyCnt : ""}</div>{" "}
+          <div> 부속건축물수:{dataidx ? buData[dataidx].atchBldCnt : ""}</div>
+          <div> 사용승인일:{dataidx ? buData[dataidx].useAprDay : ""}</div>{" "}
+          <div> 지상층수:{dataidx ? buData[dataidx].grndFlrCnt : ""}</div>{" "}
+          <div> 높이(m):{dataidx ? buData[dataidx].heit : ""}</div>
+          <div>
+            {" "}
+            내진 설계 적용 여부:
+            {dataidx ? buData[dataidx].rserthqkDsgnApplyYn : ""}
+          </div>
+          <div>(0: N ,1: Y) </div>
+        </div>
       </div>
     </div>
   );
