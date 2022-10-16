@@ -20,7 +20,7 @@ export default function Layout(props: LayoutProps) {
       title: "SignUp",
     },
     {
-      href: "/drawingupdata",
+      href: "/Drawingupdata",
       title: "drawing_Updata",
     },
   ];
