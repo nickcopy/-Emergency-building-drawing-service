@@ -32,14 +32,11 @@ export default function Drawingupdata() {
     if (file !== undefined) {
       try {
         const formData = new FormData();
-        formData.append("file", file);
-
+        formData.append("files", file);
+        console.log(formData);
         fetch("/api/userdata/brawingupdata/data", {
           method: "PUT",
           body: formData,
-          headers: {
-            "Content-Type": "image/jpg",
-          },
         })
           .then((res) => {
             return res.json();
