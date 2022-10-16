@@ -10,15 +10,29 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model userInfo {
-  id       String   @id @default(auto()) @map("_id") @db.ObjectId
-  user_id  String   @unique
+model UserInfo {
+  id       String         @id @default(auto()) @map("_id") @db.ObjectId
+  user_id  String         @unique
   ps       String?
   email    String?
   name     String?
   hp       String?
   ymd      String?
   purpose  String?
-  createAt DateTime @default(now())
-  updataAt DateTime @updatedAt
+  createAt DateTime       @default(now())
+  updataAt DateTime       @updatedAt
+  data     drawgingData[]
+}
+
+model drawgingData {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  user_id    String
+  addr_sggu  String
+  ben        String
+  gi         String
+  // data       File
+  createAt   DateTime  @default(now())
+  updataAt   DateTime  @updatedAt
+  userInfo   UserInfo? @relation(fields: [userInfoId], references: [id])
+  userInfoId String?   @db.ObjectId
 }

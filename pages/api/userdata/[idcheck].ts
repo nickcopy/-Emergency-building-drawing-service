@@ -1,11 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { userInfo } from "@prisma/client";
+import { UserInfo } from "@prisma/client";
 import client from "../../../libs/server/client";
 
 type Data = {
   ok: Boolean;
   err?: String;
-  userinfo?: userInfo;
+  userinfo?: UserInfo;
 };
 
 export default async function Handler(

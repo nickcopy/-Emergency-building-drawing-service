@@ -159,13 +159,13 @@ export default function Map() {
             className="rounded-full  border-gray-500 border-b-2 mb-2"
           ></input>
           <div className="mr-2">지 : </div>
-          <input
+          {/* <input
             value={gi}
             onChange={(envent) => {
               setGi(envent.target.value);
             }}
             className="rounded-full  border-gray-500 border-b-2 mb-2"
-          ></input>
+          ></input> */}
 
           <hr></hr>
         </div>
